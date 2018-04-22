@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         final Spinner dropdown1 = findViewById(R.id.spinner1);
         final Spinner dropdown2 = findViewById(R.id.spinner2);
         final EditText moneyInput = findViewById(R.id.moneyInput);
+        final TextView resultTextView = findViewById(R.id.textView);
         //create a list of items for the spinner.
         String[] items = new String[]{"AUD", "CAD", "EUR", "JPY", "USD", "VND"};
         Integer[] tiGias= new Integer[]{17594, 18069, 28137, 212, 22810, 1};
@@ -44,15 +46,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String money1 = dropdown1.getSelectedItem().toString();
                 String money2 = dropdown2.getSelectedItem().toString();
-                Integer input = Integer.parseInt(moneyInput.getText().toString());
+                Integer input = 0;
+                if (!moneyInput.getText().toString().equals("")) {
+                    input = Integer.parseInt(moneyInput.getText().toString());
+                }
 
                 Integer tiGia1 = spinnerMap.get(money1);
                 Integer tiGia2 = spinnerMap.get(money2);
 
-                //Float result = input * tiGia1 / tiGia2;
-
-                Log.e("logee", spinnerMap.get(money1).toString());
-                Log.e("input", input.toString());
+                Float result = input * (float) tiGia1 / tiGia2;
+                resultTextView.setText(result.toString());
             }
         });
     }
